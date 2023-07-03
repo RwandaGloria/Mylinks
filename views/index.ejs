@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link Shortener</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Belanosima:wght@700&family=Lora&display=swap');
+  </style>
+  <style>
+    body {
+      background-color: #e5e5f7;
+      opacity: 0.8;
+      background-image: radial-gradient(#ff7a00 1px, #e5e5f7 1px);
+      background-size: 20px 20px;
+      margin: 0;
+      font-family: 'Lora', serif;
+    }
+
+    .header {
+      background-color: #ff7a00;
+      color: white;
+      gap: 20px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .header-title {
+      font-size: 24px;
+      margin: 0;
+      font-family: "Belanosima";
+    }
+
+    .header-menu {
+      display: flex;
+      gap: 5px; /* Adjust the gap value as desired */
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+      flex-grow: 1;
+    }
+
+    .header-menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      text-align: center;
+      padding: 5px;
+      white-space: nowrap;
+    }
+
+    .container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .title {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .input-url-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      max-width: 400px;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .input-url {
+      width: 100%;
+      max-width: 400px;
+      height: 30px;
+      padding: 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .input-url:focus {
+      transform: scale(1.02);
+    }
+
+    .button {
+      background-color: #ff7a00;
+      color: white;
+      height: 40px;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .button:hover {
+      background-color: #e64b00;
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1 class="header-title">My Links 🔗</h1>
+    <div class="header-menu">
+      <a href="#">Home</a>
+      <a href="#">Register</a>
+      <a href="#">Login</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1 class="title">Paste your long URL</h1>
+    <div class="input-url-container">
+      <input type="text" class="input-url" id="urlInput" placeholder="https://example.com/hrtrrt-967">
+      <button class="button" onclick="Signup()">Signup to get link</button>
+    </div>
+  </div>
+
+  <script>
+
+    function Signup() {
+      window.location.href = "/signup";
+    }
+  </script>
+</body>
+
+</html>

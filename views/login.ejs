@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@700&family=Lora&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #e5e5f7;
+      opacity: 0.8;
+      background-image: radial-gradient(#ff7a00 1px, #e5e5f7 1px);
+      background-size: 20px 20px;
+      margin: 0;
+      font-family: 'Lora', serif;
+    }
+
+    .header {
+      background-color: #ff7a00;
+      color: white;
+      gap: 20px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 24px;
+      font-family: "Belanosima";
+      margin: 0;
+    }
+
+    .header-menu {
+      display: flex;
+      gap: 5px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .header-menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      flex-grow: 1;
+      text-align: center;
+      padding: 5px;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 80px;
+    }
+
+    @media screen and (min-width: 768px) {
+      .container {
+        width: 40%;
+        padding: 40px;
+      }
+    }
+
+    .container h2 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group input[type="email"],
+    .form-group input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 10px 2px;
+      box-sizing: border-box;
+    }
+
+    .form-group input[type="submit"],
+    .form-group .google-button {
+      width: 100%;
+      background-color: #ff7a00;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .form-group .google-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-group .google-button img {
+      margin-right: 10px;
+      height: 20px;
+    }
+
+    .form-group .login-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .form-group .login-link a {
+      color: #4285F4;
+      text-decoration: none;
+    }
+
+    .or-divider {
+      text-align: center;
+      position: relative;
+    }
+
+    .or-divider:before,
+    .or-divider:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background-color: #ccc;
+    }
+
+    .or-divider:before {
+      right: 0;
+      margin-right: 10px;
+    }
+
+    .or-divider:after {
+      left: 0;
+      margin-left: 10px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <div class="header">
+    <h1 class="header-title">My Links 🔗</h1>
+    <div class="header-menu">
+      <a href="#">Home</a>
+      <a href="#">Register</a>
+      <a href="#">Login</a>
+    </div>
+  </div>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="signup-form">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" value="Signup">
+      </div>
+      <div class="form-group or-divider">
+        <span>OR</span>
+      </div>
+      <div class="form-group">
+        <button class="google-button" onclick="signupWithGoogle()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
+          Login with Google
+        </button>
+      </div>
+      <div class="form-group login-link">
+        <p>Already have an account? <a href="#">Login</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
+  <script>
+    function loginWithGoogle() {
+      // Implement signup with Google logic here
+      // You can use Google Sign-In API or any other authentication library
+      console.log("Signing up with Google...");
+    }
+
+    document.getElementById("signup-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+
+      var data = {
+        email: email,
+        password: password
+      };
+
+      fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (response.ok) {
+            showSuccessMessage();
+            window.location.href = "/home";
+          } else {
+            showErrorNotification("Signup failed. Please try again.");
+          }
+        })
+        .catch(error => {
+          console.error("Error during signup:", error);
+          showErrorNotification("An error occurred during signup.");
+        });
+    });
+
+    function showSuccessMessage() {
+      Swal.fire({
+        title: "Signup Successful",
+        text: "You have successfully signed up!",
+        icon: "success",
+        confirmButtonColor: "#ff7a00"
+      });
+    }
+
+    function showErrorNotification(message) {
+      Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+        confirmButtonColor: "#ff7a00"
+      });
+    }
+  </script>
+
+</body>
+
+</html>

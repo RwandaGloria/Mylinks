@@ -16,7 +16,7 @@ cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME, 
   api_key: process.env.API_KEY, 
   api_secret: process.env.API_SECRET
-  
+
 });
 
 
@@ -31,7 +31,7 @@ router.post("/login", validator.validateLogin, passport.authenticate('custom', {
 
 router.post("/input-email", validator.validateEmailRoute, async (req, res) => 
 {
-  controllers.inputEmail(req, res)
+  controllers.inputEmail(req, res);
 })
 
 

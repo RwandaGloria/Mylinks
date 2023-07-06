@@ -35,6 +35,7 @@ router.post("/input-email", validator.validateEmailRoute, async (req, res) =>
 })
 
 
+
 router.get("/:shortUrl", async (req, res) => {
   controllers.getURL(req, res);
 })

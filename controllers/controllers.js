@@ -30,17 +30,13 @@ async function inputEmail(req, res) {
     }
 }
 async function signUp(req, res) {
-
-
     try { 
-
     const body = req.body
     const email = body.email;
     const username = body.username;
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(body.password, salt);
-
     const user = await db.db.users.create(
         {
             email: body.email,
@@ -50,11 +46,83 @@ async function signUp(req, res) {
     );
     return res.status(201).json({message: "Account Created Successfully!"});
     }
-
-
-    catch(err) {
+    catch(err) 
+    {
         console.error(err);
         return res.status(400).send(err.message);
+    }
+
+}
+
+async function getURL(req, res) {
+
+    
+  const base = "http://localhost:8099/"
+  const shortUrl = req.params.shortUrl;
+
+  const checkURLInDatabase = await db.db.URLs.findOne({where: {
+    shortURL: `${base}${shortUrl}`
+  }});
+
+  if(!checkURLInDatabase) {
+    return res.status(404).json({message: "This URL does not exist!"});
+  }
+
+  let imageData;
+  const ipAddress = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const ipData = await axios.get(`http://ip-api.com/json/102.89.45.142`) || "unknown"
+    console.log(ipData.data);
+  const newUpdate =  await db.db.URLs.update(
+    { linkClickCount: checkURLInDatabase.linkClickCount + 1 },
+    { where: { shortURL: `${base}${shortUrl}` } }
+  );
+  console.log(newUpdate)
+  await db.db.clickData.create({
+    link_id: "8b3f2830-4ce7-4344-93e6-b37194bd2fc8",
+    Country: `${ipData.data.country}` || null,
+    state: `${ipData.data.regionName}` || null
+  })
+  return res.status(302).redirect(checkURLInDatabase.dataValues.longURL)
+}
+
+async function resetPassword(req, res){
+
+    try{
+
+    const body = req.body;
+    const email = await body.email;
+
+    const findUser = await db.db.users.findOne({where: {email: email}});
+    if(!findUser) {
+        return res.status(400).send("User does not exist!");
+    }
+    else {
+
+        
+     await  utils.transporter.sendMail(
+        {
+          from: "rwandagloria@gmail.com",
+          to: body.email,
+          subject: 'Nodemailer Project',
+         html: `<h1>Hello ${findUser.name}! </h1> <h2> This is your link: ${confirmationURL}. It expires in two hours. `
+        }, function(err, data) {
+            if (err) {
+              console.log("Error " + err);
+            } else {
+              console.log("Email sent successfully");
+            }
+          });
+        return res.status(200).send(`We have sent an email to ${body.email} to confim the validity of the email. After receiving the email, follow the link provided to complete registration.`);
+        
+    } 
+    
+
+    }
+    catch(err)
+    {
+
+        
     }
 
 }
@@ -87,4 +155,4 @@ async function generate(url) {
 
     }
 }
-module.exports = { signUp, inputEmail, generateCustomLink }
+module.exports = { signUp, inputEmail, generateCustomLink, getURL }

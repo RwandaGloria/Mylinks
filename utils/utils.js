@@ -1,8 +1,16 @@
+require("dotenv").config();
 const axios = require('axios');
 const redis = require("redis");
+
+const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
+const REDIS_HOST = process.env.REDIS_HOST;
+
 const client = redis.createClient({
-  host: "127.0.0.1",
-  port: 6379
+  password: REDIS_PASSWORD,
+  socket: {
+      host: REDIS_HOST,
+      port: 11813
+  }
 });
 
 async function checkURL(req, res, next) {
@@ -60,5 +68,24 @@ async function checkURL(req, res, next) {
     });
   }
   
+
+  async function sendEmail() {
+    
+    await  utils.transporter.sendMail(
+      {
+        from: "rwandagloria@gmail.com",
+        to: body.email,
+        subject: 'Nodemailer Project',
+       html: `<h1>Hello Gloria! </h1> <h2> This is your link: ${confirmationURL}. It expires in two hours. `
+      }, function(err, data) {
+          if (err) {
+            console.log("Error " + err);
+          } else {
+            console.log("Email sent successfully");
+          }
+        });
+      return res.status(200).send(`We have sent an email to ${body.email} to confim the validity of the email. After receiving the email, follow the link provided to complete registration.`);
+      
+  }
 
   module.exports = { checkURL, generateShortURL, cache, client }

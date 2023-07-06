@@ -44,11 +44,17 @@
 
     "mysql2": "^3.3.5",
 
+    "node-redis": "^0.1.7",
+
     "passport": "^0.6.0",
 
     "passport-custom": "^1.1.1",
 
+    "passport-google-oauth": "^2.0.0",
+
     "passport-google-oauth20": "^2.0.0",
+
+    "passport-local": "^1.0.0",
 
     "passport-oauth": "^1.0.0",
 
@@ -57,6 +63,8 @@
     "redis": "^4.6.7",
 
     "sequelize": "^6.32.0",
+
+    "sequelize-cockroachdb": "^6.0.5",
 
     "sharp": "^0.32.1",
 

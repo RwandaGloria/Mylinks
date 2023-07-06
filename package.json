@@ -42,8 +42,6 @@
 
     "mysql2": "^3.3.5",
 
-    "node-redis": "^0.1.7",
-
     "passport": "^0.6.0",
 
     "passport-custom": "^1.1.1",

@@ -19,15 +19,15 @@ cloudinary.config({
 
 });
 
-
-router.get("/home", async (req, res) => {
+router.get("/home/hi", async (req, res) => {
   res.send("Hello!");
+  
 });
 
-router.post("/login", validator.validateLogin, passport.authenticate('custom', { 
-  successRedirect: '/home', 
-  failureRedirect: '/signup', 
-}));
+router.post("/login", passport.authenticate('local-login'), async (req, res) => {
+
+  res.status(302).redirect("/home");
+});
 
 router.post("/input-email", validator.validateEmailRoute, async (req, res) => 
 {
@@ -35,7 +35,10 @@ router.post("/input-email", validator.validateEmailRoute, async (req, res) =>
 })
 
 
+router.post("/reset/password", async (req, res) => {
 
+  controllers.resetPassword(req, res);
+});
 router.get("/:shortUrl", async (req, res) => {
   controllers.getURL(req, res);
 })
@@ -45,4 +48,4 @@ router.post("/signup", validator.validateSignUp, async (req, res) =>
     controllers.signUp(req, res);
     // controllers.checkURL(body.url);
 })
-module.exports = router
+module.exports = {router}

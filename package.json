@@ -2,7 +2,8 @@
 
   "scripts": {
 
-    "test": "cross-env NODE_ENV=test jest --testTimeout=5000"
+    "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
+    "dev": "nodemon app.js"
 
   },
 

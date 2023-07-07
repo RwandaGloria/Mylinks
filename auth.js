@@ -18,6 +18,7 @@ passport.use("google", new GoogleStrategy({
   
   function(accessToken, refreshToken, profile, done) {
     try {
+      
       const email = profile.emails[0].value;
       const firstName = profile.name.givenName;
       const lastName = profile.name.familyName;
@@ -58,7 +59,7 @@ passport.use("local-login", new LocalStrategy({
   passReqToCallback: true
 }, async (req, email, password, done) => {
   try {
-    const user = await db.db.findOne({ where: { email: email } });
+    const user = await db.db.users.findOne({ where: { email: email } });
     if (!user) {
       // User with the provided email does not exist
       return done(null, false, { message: "User with this email does not exist." });

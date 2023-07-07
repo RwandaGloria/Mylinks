@@ -82,16 +82,18 @@ const customURLValidator = joi.object({
 
     password: joi.string().min(6).max(20),
     email: joi.string().email(),
-    name: joi.string()
+    username: joi.string()
   });
-
   const loginValidator = joi.object({
     email: joi.string().email(),
     password: joi.string().min(6).max(20),
-    confirmPassword: joi.string().valid(joi.ref('password')).required().messages({
-      'any.only': 'Confirm password must match the password field',
-      'any.required': 'Confirm password is required',
-    }),
+    confirmPassword: joi.string()
+      .valid(joi.ref('password'))
+      .required()
+      .messages({
+        'any.only': 'Confirm password must match the password field',
+        'any.required': 'Confirm password is required',
+      }),
   });
 
 module.exports = { validateEmailRoute, validateURLRoute, validateCustomURLRoute, validateSignUp, validateLogin }

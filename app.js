@@ -24,42 +24,24 @@ app.use(session({
   }));
 app.set('view engine', 'ejs')
 
-// app.get('/', (req, res) => {
-//     res.render('index');
-// });
-
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.send('you reached the redirect URI');
-});
-
-
-app.get("/url", async(req, res) => {
-    
-    const url = await utils.generateTwoDigitAlphanumeric();
-    res.send(url)
-        
-})
 
 app.get("/", async (req, res) => {
 
-    const ipAddress = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-    const base = "http://localhost:8099/"
-    console.log(ipAddress);
+   res.send("Welcome to myLinks!")
 
 })
 
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
+app.use('/user',connectEnsureLogin.ensureLoggedIn());
 
-app.use(routes.userRouter);
+app.use("/user", routes.userRouter);
 app.use(utils.cache);
-app.use(router);
+app.use("/",  router.router);
 
 
 app.get("/data", (req, res) => {

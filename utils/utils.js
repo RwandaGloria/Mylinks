@@ -71,6 +71,14 @@ async function checkURL(req, res, next) {
 
   async function sendEmail() {
     
+    transporter.verify(function(error, success) {
+      if (error) {
+            console.log(error);
+      } else {
+            console.log('Server is ready to take our messages');
+      }
+    });
+    
     await  utils.transporter.sendMail(
       {
         from: "rwandagloria@gmail.com",

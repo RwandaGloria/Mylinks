@@ -66,12 +66,13 @@ const validateURLRoute = async (req, res, next) => {
         return res.status(406).send(err.details[0].message);
     }
 }
-const EmailValidator = joi.object({
-    email: joi.string().min(5).max(30).email().required()
-});
 const URLValidator = joi.object({
     url: joi.string().required()
 })
+const EmailValidator = joi.object({
+    email: joi.string().min(5).max(30).email().required()
+});
+
 const customURLValidator = joi.object({
     shortURL: joi.string().min(2).max(50).regex(/^[a-zA-Z0-9_-]+$/).required(),
     longURL: joi.string().required(),

@@ -20,6 +20,23 @@ cloudinary.config({
 
 
 
+  async function getURLData(req, res){
+
+    const urlId = req.params.id;
+    const body = req.body;
+
+    const findUrl = await db.db.URLs.findOne({where: {
+
+        id: urlId
+    }});
+
+    if(!findUrl){
+
+        return res.status(400).send("URL not found!");
+    }
+    return res.status(200).send(findUrl);
+  }
+
 
 async function generateRandomURL(req, res){
 
@@ -296,4 +313,4 @@ async function generate(url) {
 
     }
 }
-module.exports = { signUp, inputEmail, generateCustomLink, getURL, generateCustomURL, generateRandomURL, resetPassword }
+module.exports = { signUp, inputEmail, generateCustomLink, getURL, generateCustomURL, generateRandomURL, resetPassword, getURLData }

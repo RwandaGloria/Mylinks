@@ -3,6 +3,7 @@
   "scripts": {
 
     "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
+
     "dev": "nodemon app.js"
 
   },
@@ -64,6 +65,10 @@
     "sharp": "^0.32.1",
 
     "supertest": "^6.3.3",
+
+    "swagger-jsdoc": "^6.2.8",
+
+    "swagger-ui-express": "^4.6.3",
 
     "url": "^0.11.1"
 

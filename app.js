@@ -6,6 +6,7 @@ const db = require("./db");
 const PORT = 8099;
 const router = require("./routes/routes");
 const { auth } = require('express-openid-connect');
+const routerr = require("./routes/routes")
 const connectEnsureLogin = require("connect-ensure-login");
 const passport = require("passport");
 const session = require("express-session");
@@ -15,20 +16,33 @@ const axios = require("axios");
 const routes = require("./routes/user-routes");
 const ejs = require("ejs");
 
-// Before defining your routes
+const swaggerJSDoc = require('swagger-jsdoc');
 
+const swaggerDefinition = {
+  openapi: '3.0.0',
+  info: {
+    title: 'URL Shortener(My links)',
+    description: "This is Altschool capstone project",
+    version: '1.0.0',
+  },
+};
+
+const options = {
+  swaggerDefinition,
+  apis: ['./routes/routes.js', './routes/user-routes.js', './controllers/controllers.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+const swaggerUi = require('swagger-ui-express');
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(session({
     secret: 'your_session_secret',
     resave: false,
     saveUninitialized: true
   }));
 app.set('view engine', 'ejs')
-
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
 app.get("/", async (req, res) => {
 
    res.send("Welcome to myLinks!")

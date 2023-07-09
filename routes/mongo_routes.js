@@ -8,8 +8,10 @@ router.post('/url/generate/random', mongoController.generateRandomURL);
 router.post('/url/generate/custom', mongoController.generateCustomURL);
 router.post('/email', mongoController.inputEmail);
 router.post('/signup', mongoController.signUp);
+router.post('/login', mongoController.login);
 router.get('/:shortUrl', mongoController.getURL);
 router.post('/reset-password', mongoController.sendPasswordResetLink);
 router.post('/change-password/:user/:token', mongoController.changePassword);
+router.get('/url/all/:userId', mongoController.getAllURLs)
 
 module.exports = router;

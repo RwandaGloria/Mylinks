@@ -51,12 +51,39 @@ async function signUp(req, res) {
             username: username,
         });
 
-        return res.status(201).json({ message: 'Account Created Successfully!' });
+        return res.status(201).json({ message: 'Account Created Successfully!', user: user });
     } catch (err) {
         console.log(err);
         return res.status(500).send(err.message);
     }
 }
+
+async function login(req, res) {
+    try {
+        const body = req.body;
+
+        const email = body.email;
+        const password = body.password;
+
+        const user = await User.findOne({ email: email });
+
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        return res.status(200).json({ message: 'Login successful', user: user });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send(err.message);
+    }
+}
+
 
 
 async function inputEmail(req, res) {
@@ -162,7 +189,8 @@ async function changePassword(req, res) {
 async function generateRandomURL(req, res) {
     try {
         const body = req.body;
-        const longURL = body.url;
+        const longURL = body.longURL;
+        const userId = body.userId;
         const base = "http://localhost:8099/";
         const shortURL = await utils.generateShortURL();
         const imageId = `${base}${shortURL}`;
@@ -170,6 +198,7 @@ async function generateRandomURL(req, res) {
         res.setHeader('Content-Type', 'application/json');
 
         const newURL = {
+            userId: userId,
             longURL: longURL,
             shortURL: `${base}${shortURL}`
         };
@@ -203,6 +232,7 @@ async function generateCustomURL(req, res) {
         const body = req.body;
         const shortURL = body.shortURL;
         const longURL = req.body.longURL;
+        const userId = body.userId;
         const base = "http://localhost:8099/";
         const URLAppend = body.shortURL;
         const URLToAdd = `${base}${URLAppend}`;
@@ -214,6 +244,7 @@ async function generateCustomURL(req, res) {
             return res.status(400).json({ message: "That URL has been assigned to someone else. Please try again!" });
         } else {
             const newURL = {
+                userId: userId,
                 longURL: longURL,
                 shortURL: `${base}${shortURL}`
             };
@@ -310,5 +341,29 @@ async function getURL(req, res) {
     }
 }
 
+async function getAllURLs(req, res) {
+    try {
+        const userId = req.params.userId;
 
-module.exports = { signUp, inputEmail, sendPasswordResetLink, changePassword, generateRandomURL, generateCustomURL, getURLData, getURL };
+        const urlList = await URL.find({ userId: userId });
+
+        return res.status(200).json({ message: 'URLs Retrieved Successfully!', urls: urlList });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: err.message });
+    }
+}
+
+
+module.exports = {
+    signUp,
+    inputEmail,
+    sendPasswordResetLink,
+    changePassword,
+    generateRandomURL,
+    generateCustomURL,
+    getURLData,
+    getURL,
+    getAllURLs,
+    login
+};

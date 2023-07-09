@@ -137,5 +137,12 @@ router.post("/signup", validator.validateSignUp, async (req, res) =>
 {
     const body = req.body;
     controllers.signUp(req, res);
-})
+});
+
+router.get("/reset-password/:token", validator.validateSignUp, async (req, res) => 
+{
+    controllers.resetPassword(req, res);
+});
+
+router.post("/")
 module.exports = {router}

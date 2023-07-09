@@ -191,7 +191,7 @@ async function generateRandomURL(req, res) {
         const body = req.body;
         const longURL = body.longURL;
         const userId = body.userId;
-        const base = "http://localhost:8099/";
+        const base = `${req.protocol}://${req.get('host')}/`;
         const shortURL = await utils.generateShortURL();
         const imageId = `${base}${shortURL}`;
 
@@ -233,7 +233,7 @@ async function generateCustomURL(req, res) {
         const shortURL = body.shortURL;
         const longURL = req.body.longURL;
         const userId = body.userId;
-        const base = "http://localhost:8099/";
+        const base = `${req.protocol}://${req.get('host')}/`;
         const URLAppend = body.shortURL;
         const URLToAdd = `${base}${URLAppend}`;
 

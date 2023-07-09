@@ -2,6 +2,7 @@ require("dotenv").config();
 const axios = require('axios');
 const redis = require("redis");
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 const REDIS_HOST = process.env.REDIS_HOST;
@@ -86,4 +87,17 @@ async function sendEmail(receiverMail, subject, htmlBody) {
   console.log(info.messageId); 
 }
 
-module.exports = { checkURL, generateShortURL, cache, sendEmail, client }
+function generateToken() {
+  const length = 10;
+  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  let token = '';
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = crypto.randomInt(0, characters.length);
+    token += characters.charAt(randomIndex);
+  }
+
+  return token;
+}
+
+module.exports = { checkURL, generateShortURL, cache, sendEmail, generateToken, client }

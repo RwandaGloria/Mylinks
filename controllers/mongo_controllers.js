@@ -85,7 +85,6 @@ async function login(req, res) {
 }
 
 
-
 async function inputEmail(req, res) {
     try {
         const email = req.body.email;
@@ -185,6 +184,8 @@ async function changePassword(req, res) {
         return res.status(400).send(err.message);
     }
 }
+
+
 
 async function generateRandomURL(req, res) {
     try {

@@ -3,11 +3,15 @@ require("dotenv").config();
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 
 const mongoRoutes = require('./routes/mongo_routes');
 const utils = require('./utils/utils');
 
 const app = express();
+
+app.use(cors());
 
 mongoose.set('strictQuery', false);
 

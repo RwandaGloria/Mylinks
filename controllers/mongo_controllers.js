@@ -303,7 +303,7 @@ async function getURLData(req, res) {
 
 async function getURL(req, res) {
     try {
-        const base = "http://localhost:8099/";
+        const base = `${req.protocol}://${req.get('host')}/`;
         const shortUrl = req.params.shortUrl;
 
         console.log("Short url: " + `${base}${shortUrl}`);

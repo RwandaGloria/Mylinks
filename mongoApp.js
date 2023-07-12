@@ -30,9 +30,6 @@ mongoose.connect(process.env.MONGO_URL).then((result) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-app.use(mongoRoutes);
-
 //Swagger definitions
 const swaggerJSDoc = require('swagger-jsdoc');
 
@@ -53,6 +50,9 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 const swaggerUi = require('swagger-ui-express');
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
+app.use(mongoRoutes);
 
 
 //Error message for wrong endpoint
